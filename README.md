@@ -40,8 +40,8 @@
 
 本项目前端默认通过 `/api` 访问后端。
 
-* 在 **Netlify 部署** 时，`/api/*` 由 Netlify Functions 提供，并默认把数据存到 Netlify Blobs（这不会写入云服务器的 MySQL `userdb.daily_logs`）。
-* 如果希望写入 **云服务器上的 MySQL**，需要把前端请求指向自建后端（Server）。
+* 在 **Netlify 部署** 时，`/api/*` 由 Netlify Functions 提供，并直接把数据写入 MySQL（`userdb.daily_logs`），不再使用 Netlify Blobs。
+* 也可以把前端请求指向自建后端（Server），通过 `VITE_API_BASE_URL` 来切换。
 
 1.  确保 `services/storageService.ts` 中的 `API_BASE_URL` 指向您的服务器 IP 地址。
     - 推荐方式：在构建环境里设置 `VITE_API_BASE_URL`，例如 `http://<server-ip>:3000/api`（无需改代码）。
@@ -54,6 +54,20 @@
 ## 数据库结构
 
 请参考 `server/schema.sql` 在 MySQL 中创建 `daily_logs` 表。
+
+## Netlify Functions 连接 MySQL（必配）
+
+在 Netlify 项目环境变量中配置（不要写进代码仓库）：
+
+```
+DB_HOST=8.148.218.240
+DB_PORT=3306
+DB_USER=你的用户名
+DB_PASSWORD=你的密码
+DB_NAME=userdb
+```
+
+> 注意：MySQL 需要允许来自 Netlify Functions 的公网访问（安全组/防火墙、MySQL `bind-address` 等），并建议使用最小权限账号。
 
 ## 主要功能
 
