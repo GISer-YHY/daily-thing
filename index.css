@@ -1,0 +1,107 @@
+:root {
+  color-scheme: light;
+  --bg-0: #f7fbff;
+  --bg-1: #fef6ff;
+  --bg-2: #f5fff7;
+  --text: #0f172a;
+  --muted: #64748b;
+  --card: rgba(255, 255, 255, 0.72);
+  --card-border: rgba(148, 163, 184, 0.22);
+  --shadow: 0 14px 42px rgba(2, 6, 23, 0.08);
+  --accent: #7c3aed;
+  --accent-2: #06b6d4;
+  --accent-3: #22c55e;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Noto Sans SC', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, 'Apple Color Emoji',
+    'Segoe UI Emoji';
+  color: var(--text);
+  background: radial-gradient(1200px 600px at 12% 0%, var(--bg-1), transparent 62%),
+    radial-gradient(900px 520px at 88% 12%, #ecfeff, transparent 60%),
+    radial-gradient(1200px 720px at 70% 96%, var(--bg-2), transparent 58%),
+    linear-gradient(180deg, var(--bg-0), #ffffff 55%, #f8fafc);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: rgba(124, 58, 237, 0.18);
+}
+
+#root {
+  min-height: 100%;
+}
+
+/* Gentle floating blobs (healing vibe) */
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  inset: auto;
+  z-index: -1;
+  pointer-events: none;
+  filter: blur(30px);
+  opacity: 0.55;
+  transform: translateZ(0);
+}
+
+body::before {
+  width: 520px;
+  height: 520px;
+  left: -140px;
+  top: 220px;
+  background: radial-gradient(circle at 30% 30%, rgba(124, 58, 237, 0.28), rgba(99, 102, 241, 0) 62%),
+    radial-gradient(circle at 70% 60%, rgba(6, 182, 212, 0.24), rgba(6, 182, 212, 0) 60%);
+  animation: floaty 14s ease-in-out infinite;
+}
+
+body::after {
+  width: 560px;
+  height: 560px;
+  right: -180px;
+  top: 80px;
+  background: radial-gradient(circle at 40% 40%, rgba(34, 197, 94, 0.18), rgba(34, 197, 94, 0) 64%),
+    radial-gradient(circle at 70% 70%, rgba(236, 72, 153, 0.14), rgba(236, 72, 153, 0) 62%);
+  animation: floaty 18s ease-in-out infinite reverse;
+}
+
+@keyframes floaty {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(0, -24px, 0) scale(1.02);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before,
+  body::after {
+    animation: none;
+  }
+}
+
+/* Softer scrollbars (WebKit) */
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-thumb {
+  background: rgba(124, 58, 237, 0.18);
+  border-radius: 999px;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+}
+*::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.35);
+}
+

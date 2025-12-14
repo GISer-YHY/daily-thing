@@ -29,33 +29,37 @@ export const DateHeader: React.FC<DateHeaderProps> = ({ currentDate, onDateChang
   });
 
   return (
-    <div className="sticky top-0 z-30 bg-white/95 backdrop-blur-sm border-b border-slate-200 shadow-sm mb-6 transition-all duration-300">
-      <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
+    <div className="sticky top-0 z-30 mb-6 transition-all duration-300">
+      <div className="bg-white/70 backdrop-blur-md border-b border-white/60 shadow-soft">
+        <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
         <button 
           onClick={handlePrev}
-          className="p-2 hover:bg-slate-100 rounded-full transition-colors text-slate-600 active:bg-slate-200"
+          className="p-2 rounded-full transition-colors text-slate-700 hover:bg-white/70 active:bg-white focus:outline-none focus:ring-2 focus:ring-violet-200/60"
           aria-label="前一天"
         >
           <ChevronLeft size={24} />
         </button>
 
         <div className="flex flex-col items-center justify-center cursor-default">
-          <div className="flex items-center space-x-2 text-indigo-700 font-bold text-lg md:text-xl">
+          <div className="flex items-center space-x-2 font-extrabold text-lg md:text-xl">
             <Calendar size={18} className="hidden xs:block" />
-            <span>{formattedDate}</span>
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-700 via-fuchsia-600 to-cyan-600">
+              {formattedDate}
+            </span>
           </div>
-          <div className="text-xs text-slate-400 font-medium">
+          <div className="text-xs text-slate-500/80 font-medium">
             {currentDate}
           </div>
         </div>
 
         <button 
           onClick={handleNext}
-          className="p-2 hover:bg-slate-100 rounded-full transition-colors text-slate-600 active:bg-slate-200"
+          className="p-2 rounded-full transition-colors text-slate-700 hover:bg-white/70 active:bg-white focus:outline-none focus:ring-2 focus:ring-violet-200/60"
           aria-label="后一天"
         >
           <ChevronRight size={24} />
         </button>
+        </div>
       </div>
     </div>
   );

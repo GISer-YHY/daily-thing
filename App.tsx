@@ -133,14 +133,14 @@ const App: React.FC = () => {
     }
   };
 
-  if (!dayLog && !error) return <div className="min-h-screen flex items-center justify-center bg-slate-50"><Loader2 className="animate-spin text-indigo-600" /></div>;
+  if (!dayLog && !error) return <div className="min-h-screen flex items-center justify-center"><Loader2 className="animate-spin text-violet-600" /></div>;
 
   const completedCount = dayLog ? dayLog.tasks.filter(t => t.completed).length : 0;
   const totalCount = dayLog ? dayLog.tasks.length : 0;
   const progress = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 pb-32">
+    <div className="min-h-screen text-slate-800 pb-32">
       {/* Sticky Header */}
       <DateHeader currentDate={currentDate} onDateChange={setCurrentDate} />
 
@@ -148,28 +148,31 @@ const App: React.FC = () => {
         
         {/* Title Area */}
         <header className="mb-6 px-1">
-          <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">
-            每日进阶 <span className="text-indigo-600">.</span>
+          <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-700 via-fuchsia-600 to-cyan-600">
+              每日进阶
+            </span>{' '}
+            <span className="text-violet-500">.</span>
           </h1>
-          <p className="text-slate-500 mt-2 text-sm md:text-base">记录博士之路与销售人生的每一个脚印</p>
+          <p className="text-slate-600/90 mt-2 text-sm md:text-base">记录博士之路与销售人生的每一个脚印</p>
         </header>
 
         {error && (
-          <div className="mb-4 p-3 bg-red-50 text-red-600 rounded-lg flex items-center text-sm border border-red-100">
+          <div className="mb-4 p-3 bg-red-50/80 text-red-600 rounded-xl flex items-center text-sm border border-red-100 shadow-sm">
             <AlertCircle size={16} className="mr-2 flex-shrink-0" />
             {error}
           </div>
         )}
 
         {/* Progress Bar */}
-        <div className="mb-6 bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+        <div className="mb-6 bg-white/70 backdrop-blur-md p-4 rounded-2xl border border-white/60 shadow-soft">
           <div className="flex justify-between items-end mb-2">
             <span className="text-sm font-semibold text-slate-600">今日完成度</span>
-            <span className="text-2xl font-bold text-indigo-600">{progress}%</span>
+            <span className="text-2xl font-extrabold text-violet-600">{progress}%</span>
           </div>
-          <div className="w-full bg-slate-100 rounded-full h-2.5">
+          <div className="w-full bg-slate-100/80 rounded-full h-2.5 overflow-hidden">
             <div 
-              className="bg-indigo-600 h-2.5 rounded-full transition-all duration-700 ease-out" 
+              className="h-2.5 rounded-full transition-all duration-700 ease-out bg-gradient-to-r from-violet-600 via-fuchsia-500 to-cyan-500 shadow-glow" 
               style={{ width: `${progress}%` }}
             ></div>
           </div>
@@ -192,7 +195,7 @@ const App: React.FC = () => {
         {/* Add Task Button */}
         <button 
           onClick={handleAddTask}
-          className="w-full py-4 mt-6 border-2 border-dashed border-slate-300 rounded-xl text-slate-500 font-medium hover:border-indigo-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all flex items-center justify-center gap-2 group focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500"
+          className="w-full py-4 mt-6 border-2 border-dashed border-slate-300/80 rounded-2xl text-slate-600 font-medium hover:border-violet-400 hover:text-violet-700 hover:bg-white/60 backdrop-blur transition-all flex items-center justify-center gap-2 group focus:outline-none focus:ring-2 focus:ring-violet-200/60 focus:border-violet-400 shadow-sm"
         >
           <Plus size={20} className="group-hover:scale-110 transition-transform"/>
           添加新任务
@@ -201,10 +204,10 @@ const App: React.FC = () => {
         {/* Save Indicator - Fixed at bottom for visibility */}
         <div className="fixed bottom-6 right-6 z-40">
           <div className={`
-            flex items-center px-4 py-2 rounded-full shadow-lg transition-all duration-300 backdrop-blur-md
+            flex items-center px-4 py-2 rounded-full transition-all duration-300 backdrop-blur-md shadow-soft
             ${isSaved 
-              ? 'bg-white/90 text-slate-600 border border-slate-200' 
-              : 'bg-indigo-600 text-white'}
+              ? 'bg-white/80 text-slate-700 border border-white/60' 
+              : 'bg-violet-600 text-white'}
             ${error ? 'bg-red-500 text-white border-red-500' : ''}
           `}>
             {isSyncing ? (
