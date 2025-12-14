@@ -154,7 +154,7 @@ const App: React.FC = () => {
             </span>{' '}
             <span className="text-violet-500">.</span>
           </h1>
-          <p className="text-slate-600/90 mt-2 text-sm md:text-base">记录博士之路与销售人生的每一个脚印</p>
+         
         </header>
 
         {error && (
