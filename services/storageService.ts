@@ -1,8 +1,8 @@
 import { DayLog, DEFAULT_TASKS } from '../types';
 
-// Use relative path '/api'. 
-// In development (Vite), you might need a proxy in vite.config.ts or just rely on manual handling.
-// In production (Netlify), netlify.toml will proxy this to http://8.148.218.240:3000/api
+// Use relative path '/api'.
+// In production (Netlify), this is handled by Netlify Functions.
+// In local development, prefer running `netlify dev` so `/api/*` is available.
 const API_BASE_URL = '/api';
 
 /**

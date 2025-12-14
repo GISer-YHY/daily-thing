@@ -4,15 +4,6 @@ import react from '@vitejs/plugin-react'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  server: {
-    proxy: {
-      // 这里的代理设置仅对本地开发 (npm run dev) 有效
-      // 生产环境 (Netlify) 使用 netlify.toml 配置
-      '/api': {
-        target: 'http://8.148.218.240:3000',
-        changeOrigin: true,
-        secure: false,
-      }
-    }
-  }
+  // 本项目的 `/api/*` 由 Netlify Functions 提供。
+  // 本地开发建议使用 `netlify dev`（会同时启动前端与 Functions）。
 })
