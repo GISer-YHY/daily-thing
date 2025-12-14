@@ -14,7 +14,11 @@ const json = (body: unknown, init?: ResponseInit) =>
 const isIsoDate = (value: string) => /^\d{4}-\d{2}-\d{2}$/.test(value);
 
 const getStoreName = () => {
-  const context = (globalThis as any)?.Netlify?.env?.get?.("CONTEXT") ?? "unknown";
+  const context =
+    process.env.CONTEXT ??
+    process.env.NETLIFY_CONTEXT ??
+    (globalThis as any)?.Netlify?.env?.get?.("CONTEXT") ??
+    "unknown";
   return context === "production" ? "daily-logs" : `daily-logs-${String(context)}`.slice(0, 64);
 };
 

@@ -38,9 +38,13 @@
 
 ### 2. 前端运行 (Frontend)
 
-本项目前端使用 ESM 模块直接在浏览器运行 (No-Build 模式)。
+本项目前端默认通过 `/api` 访问后端。
+
+* 在 **Netlify 部署** 时，`/api/*` 由 Netlify Functions 提供，并默认把数据存到 Netlify Blobs（这不会写入云服务器的 MySQL `userdb.daily_logs`）。
+* 如果希望写入 **云服务器上的 MySQL**，需要把前端请求指向自建后端（Server）。
 
 1.  确保 `services/storageService.ts` 中的 `API_BASE_URL` 指向您的服务器 IP 地址。
+    - 推荐方式：在构建环境里设置 `VITE_API_BASE_URL`，例如 `http://<server-ip>:3000/api`（无需改代码）。
 2.  使用任意静态文件服务器运行根目录。例如:
     ```bash
     npx serve .
