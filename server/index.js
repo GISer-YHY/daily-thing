@@ -63,7 +63,22 @@ app.get('/api/logs/:date', async (req, res) => {
     const [rows] = await pool.query('SELECT content FROM daily_logs WHERE date = ?', [date]);
     
     if (rows.length > 0) {
-      res.json(rows[0].content);
+      const raw = rows[0]?.content;
+      if (raw == null) {
+        return res.status(404).json({ message: 'Log not found' });
+      }
+
+      // `content` is stored as JSON text. Return parsed JSON when possible,
+      // otherwise fall back to the raw value.
+      if (typeof raw === 'string') {
+        try {
+          return res.json(JSON.parse(raw));
+        } catch {
+          return res.json(raw);
+        }
+      }
+
+      return res.json(raw);
     } else {
       res.status(404).json({ message: 'Log not found' });
     }

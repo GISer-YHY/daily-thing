@@ -1,16 +1,23 @@
 import { DayLog, DEFAULT_TASKS } from '../types';
 
-// Use relative path '/api'.
-// In production (Netlify), this is handled by Netlify Functions.
-// In local development, prefer running `netlify dev` so `/api/*` is available.
-const API_BASE_URL = '/api';
+// Default to Netlify Functions (/api). If deploying with a separate backend
+// (e.g. a cloud VM), set `VITE_API_BASE_URL` to something like:
+//   https://example.com/api
+//   http://<server-ip>:3000/api
+const API_BASE_URL = ((import.meta as any)?.env?.VITE_API_BASE_URL as string | undefined) ?? '/api';
+
+const joinUrl = (base: string, path: string) => {
+  const normalizedBase = base.replace(/\/+$/, '');
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+  return `${normalizedBase}${normalizedPath}`;
+};
 
 /**
  * Fetch daily log from the backend server
  */
 export const getLogForDate = async (date: string): Promise<DayLog> => {
   try {
-    const response = await fetch(`${API_BASE_URL}/logs/${date}`);
+    const response = await fetch(joinUrl(API_BASE_URL, `/logs/${date}`));
     
     if (response.status === 404) {
       // If no log exists for this date, return a new initialized structure
@@ -43,7 +50,7 @@ export const getLogForDate = async (date: string): Promise<DayLog> => {
  */
 export const saveLog = async (log: DayLog): Promise<void> => {
   try {
-    const response = await fetch(`${API_BASE_URL}/logs`, {
+    const response = await fetch(joinUrl(API_BASE_URL, '/logs'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
